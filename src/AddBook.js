@@ -9,25 +9,14 @@ class AddBook extends Component{
     result: []
   }
 
-  /*componentWillUpdate(nextProps, nextState){
-    if(this.state.query && (this.state.query !== nextState.query)){
-
-    }
-    console.log(this.state.result)
-  }*/
-
   updateQuery = (query) => {
     this.setState({ query: query.trim() });
     this.props.onTextChange(query);
   }
 
   render(){
-    const { result } = this.props
+    const { result, onUpdateBookShelf } = this.props
     const { query } = this.state
-
-    if(query){
-      console.log(query);
-    }
 
     return(
       <div className="search-books">
@@ -41,7 +30,7 @@ class AddBook extends Component{
           </div>
         </div>
         <div className="search-books-results">
-          <ListBooks books={result}>
+          <ListBooks books={result} onUpdateBookShelf={ onUpdateBookShelf }>
           </ListBooks>
         </div>
       </div>

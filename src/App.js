@@ -12,24 +12,37 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount(){
-    BooksAPI.getAll().then((books) => {
+    BooksAPI.getAll().then((books) => {console.dir(books);
       this.setState({ books })
     });
   }
 
   searchBook = (query) => {
-    BooksAPI.search(query, 20).then((books) => {
-      if(books.length > 0){
-        this.setState({ result: books })
-      }
-    });
+    if(query.length > 0){
+      BooksAPI.search(query, 20).then((books) => {
+        if(typeof books !== "undefined" && books.length > 0){
+          this.setState({ result: books })
+        }
+      });
+    }
+    else{
+      this.setState({ result: []});
+    }
+  }
+
+  updateBook = (book, shelf) =>{ 
+    if(shelf){
+      BooksAPI.update(book, shelf).then((books) => {
+        console.log(books);
+      });
+    }
   }
 
   render() {
     return (
       <div className="app">
         <Route path="/add" render={() => (
-          <AddBook onTextChange={this.searchBook} result={this.state.result}>
+          <AddBook onTextChange={this.searchBook} result={this.state.result} onUpdateBookShelf={this.updateBook}>
           </AddBook>
         )}/>
         <Route exact path="/" render={() => (
@@ -42,21 +55,24 @@ class BooksApp extends React.Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "currentlyReading")}>
+                    <ListBooks books={this.state.books.filter((book) => book.shelf === "currentlyReading")}
+                      onUpdateBookShelf={this.updateBook}>
                     </ListBooks>
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "wantToRead")}>
+                    <ListBooks books={this.state.books.filter((book) => book.shelf === "wantToRead")}
+                      onUpdateBookShelf={this.updateBook}>
                     </ListBooks>
                   </div>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "read")}>
+                    <ListBooks books={this.state.books.filter((book) => book.shelf === "read")}
+                      onUpdateBookShelf={this.updateBook}>
                     </ListBooks>
                   </div>
                 </div>
