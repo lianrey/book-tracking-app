@@ -12,32 +12,39 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount(){
-    this.getAll();
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books });
+    });
   }
 
-  getAll = () => {
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-    });
+  componentWillReceiveProps(){
+    this.setState({ result: [] });
   }
 
   searchBook = (query) => {
     if(query.length > 0){
       BooksAPI.search(query, 20).then((books) => {
         if(typeof books !== "undefined" && books.length > 0){
-          this.setState({ result: books })
+          let results = books.map((res) => {
+            let book = this.state.books.filter((b) => b.id === res.id);
+            return (book.length > 0) ? book[0] : res;
+          });
+          this.setState({ result: results });
         }
       });
     }
     else{
-      this.setState({ result: []});
+      this.setState({ result: [] });
     }
   }
 
   updateBook = (book, shelf) =>{
     if(shelf){
-      BooksAPI.update(book, shelf).then((books) => {
-        this.getAll();
+      BooksAPI.update(book, shelf).then((res) => {
+        let books = this.state.books.filter(books => books.id !== book.id);
+        book.shelf = shelf;
+        books.push(book);
+        this.setState({ books: books });
       });
     }
   }
@@ -45,7 +52,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/add" render={(history) => (
+        <Route path="/search" render={({ history } ) => (
           <AddBook onTextChange={this.searchBook} result={this.state.result} onUpdateBookShelf={this.updateBook}>
           </AddBook>
         )}/>
@@ -83,7 +90,7 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <Link to="/add"></Link>
+              <Link to="/search"></Link>
             </div>
           </div>
         )}/>

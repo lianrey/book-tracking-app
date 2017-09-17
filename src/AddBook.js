@@ -11,8 +11,7 @@ class AddBook extends Component {
 	}
 
   state = {
-    query: "",
-    result: []
+    query: ""
   }
 
   updateQuery = (query) => {
@@ -36,7 +35,7 @@ class AddBook extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ListBooks books={result} onUpdateBookShelf={onUpdateBookShelf}>
+          <ListBooks books={result} onUpdateBookShelf={ onUpdateBookShelf }>
           </ListBooks>
         </div>
       </div>
