@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
+import PropTypes from 'prop-types'
 
-class AddBook extends Component{
+class AddBook extends Component {
+  static propTypes = {
+    result: PropTypes.array.isRequired,
+    onTextChange: PropTypes.func.isRequired,
+    onUpdateBookShelf: PropTypes.func.isRequired
+	}
+
   state = {
     query: "",
     result: []
@@ -30,7 +36,7 @@ class AddBook extends Component{
           </div>
         </div>
         <div className="search-books-results">
-          <ListBooks books={result} onUpdateBookShelf={ onUpdateBookShelf }>
+          <ListBooks books={result} onUpdateBookShelf={onUpdateBookShelf}>
           </ListBooks>
         </div>
       </div>

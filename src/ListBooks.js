@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 class ListBooks extends Component{
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onUpdateBookShelf: PropTypes.func.isRequired
 	}
 
   render(){
