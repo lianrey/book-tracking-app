@@ -11,6 +11,11 @@ class BooksApp extends React.Component {
     result: []
   }
 
+  constructor(props) {
+    super(props);
+    this.searchBook = this.debounce(this.searchBook,1000);
+  }
+
   componentDidMount(){
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
@@ -20,6 +25,17 @@ class BooksApp extends React.Component {
   componentWillReceiveProps(){
     this.setState({ result: [] });
   }
+
+  debounce = (fn, delay) => {
+    var timer = null;
+    return function () {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  };
 
   searchBook = (query) => {
     if(query.length > 0){
