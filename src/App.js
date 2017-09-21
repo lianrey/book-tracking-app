@@ -78,30 +78,15 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "currentlyReading")}
-                      onUpdateBookShelf={this.updateBook}>
-                    </ListBooks>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "wantToRead")}
-                      onUpdateBookShelf={this.updateBook}>
-                    </ListBooks>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ListBooks books={this.state.books.filter((book) => book.shelf === "read")}
-                      onUpdateBookShelf={this.updateBook}>
-                    </ListBooks>
-                  </div>
-                </div>
+                <ListBooks books={this.state.books.filter((book) => book.shelf === "currentlyReading")}
+                  onUpdateBookShelf={this.updateBook} title="Currently Reading" olWrapperClass="bookshelf-books">
+                </ListBooks>
+                <ListBooks books={this.state.books.filter((book) => book.shelf === "wantToRead")}
+                  onUpdateBookShelf={this.updateBook} title="Want to Read" olWrapperClass="bookshelf-books">
+                </ListBooks>
+                <ListBooks books={this.state.books.filter((book) => book.shelf === "read")}
+                  onUpdateBookShelf={this.updateBook} title="Read" olWrapperClass="bookshelf-books">
+                </ListBooks>
               </div>
             </div>
             <div className="open-search">

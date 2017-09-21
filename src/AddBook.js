@@ -34,10 +34,9 @@ class AddBook extends Component {
             />
           </div>
         </div>
-        <div className="search-books-results">
-          <ListBooks books={result} onUpdateBookShelf={ onUpdateBookShelf }>
-          </ListBooks>
-        </div>
+        <ListBooks books={result} onUpdateBookShelf={ onUpdateBookShelf }
+          olWrapperClass="search-books-results">
+        </ListBooks>
       </div>
     )
   }
