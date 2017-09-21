@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.searchBook = this.debounce(this.searchBook,1000);
+    this.searchBook = this.debounce(this.searchBook, 1000);
   }
 
   componentDidMount(){
@@ -57,9 +57,8 @@ class BooksApp extends React.Component {
   updateBook = (book, shelf) =>{
     if(shelf){
       BooksAPI.update(book, shelf).then((res) => {
-        let books = this.state.books.filter(books => books.id !== book.id);
         book.shelf = shelf;
-        books.push(book);
+        let books = this.state.books.filter(books => books.id !== book.id).concat(book);
         this.setState({ books: books });
       });
     }
